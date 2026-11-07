@@ -305,7 +305,14 @@
     transition: opacity .8s ease, filter .25s ease, transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
   }
   .print.show{ opacity: .9; }
-  .print img{ display: block; width: 100%; height: auto; background: #eadfd6; }
+  .print img, .print video{ display: block; width: 100%; height: auto; background: #eadfd6; }
+  .print video{ aspect-ratio: 3 / 4; object-fit: cover; }
+  .print.vid::after{          /* little play badge so you can tell a video from a photo */
+    content: '\25B6'; position: absolute; right: 22px; bottom: 22px; width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(40,20,36,.55); color: #fff; font-size: 22px; padding-left: 4px; box-sizing: border-box;
+    display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .2s;
+  }
+  .print.vid.playing::after, .float.active .print.vid::after, .float:hover .print.vid::after{ opacity: 0; }
   .float.active .print{
     opacity: 1; filter: none;
     transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(1) rotate(0deg);
@@ -330,7 +337,8 @@
     display: none; align-items: center; justify-content: center; padding: 24px;
   }
   .lightbox.open{ display: flex; }
-  .lightbox img{ max-width: 100%; max-height: 90vh; border: 10px solid #fffefb; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lightbox img, .lightbox video{ max-width: 100%; max-height: 90vh; border: 10px solid #fffefb; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lightbox video{ display: none; background: #000; }
   .lightbox button{
     position: absolute; top: 14px; right: 18px; font-size: 30px; line-height: 1;
     background: none; border: 0; color: #fff; cursor: pointer; padding: 6px 10px;
@@ -1052,6 +1060,7 @@
   <button class="close" id="lbClose" aria-label="Close">×</button>
   <button class="nav prev" id="lbPrev" aria-label="Previous photo">‹</button>
   <img id="lbImg" alt="">
+  <video id="lbVid" controls playsinline loop></video>
   <button class="nav next" id="lbNext" aria-label="Next photo">›</button>
 </div>
 
@@ -1113,15 +1122,7 @@
     { e: '👕', t: 'Let him take off one piece of your clothing.' },
     { e: '🖤', t: 'Put on something sexy and sit on his lap.' },
     { e: '🔥', t: 'Make out with him, one on top of the other.' },
-    { e: '🌙', t: 'Let him kiss your body in the order you choose.' },
-	{ e: '😈', t: 'Let him tease your "little girl".' },
-	{ e: '🥵', t: 'Tease his "little boy".' },
-	{ e: '🍒', t: 'Say 3 "dirty talk" lines.' },
-	{ e: '👅', t: '69 session.' },
-	{ e: '💄', t: 'Put your lipstick on him then kiss.' },
-	{ e: '🔞', t: 'Choose a daring place to do something bold.' },
-	{ e: '🍓', t: 'Feed him orally.' },
-	{ e: '😏', t: 'Let try a new position.' },
+    { e: '🌙', t: 'Let him kiss your body in the order you choose.' }
   ];
   // what the two chibis say when you tap them (edit freely, any language)
   var LINES_HIM = ["Anh yêu em! 💗", "Đi ăn gì nhỉ? 🍜", "Ôm chặt nha~", "Sinh nhật vui nha em!", "Hôm nay em đẹp nhất 😘"];
@@ -1138,6 +1139,8 @@
   var photoCap = 4;   // how many photos may float at once (changes per page)
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i;
+  var VID_RE = /\.(mp4|webm|mov|m4v)$/i;
+  var MEDIA_RE = /\.(jpe?g|png|webp|gif|avif|mp4|webm|mov|m4v)$/i;   // photos and videos both float
   function $(id){ return document.getElementById(id); }
   function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
 
@@ -1158,20 +1161,31 @@
     return fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/images')
       .then(function(r){ if (!r.ok) throw 0; return r.json(); })
       .then(function(items){
-        return items.filter(function(f){ return f.type === 'file' && IMG_RE.test(f.name); })
+        return items.filter(function(f){ return f.type === 'file' && MEDIA_RE.test(f.name); })
                     .map(function(f){ return 'images/' + encodeURIComponent(f.name); });
       });
   }
   function fromJson(){
     return fetch('images/photos.json').then(function(r){ if (!r.ok) throw 0; return r.json(); })
-      .then(function(names){ return names.filter(function(n){ return IMG_RE.test(n); }).map(function(n){ return 'images/' + encodeURI(n); }); });
+      .then(function(names){ return names.filter(function(n){ return MEDIA_RE.test(n); }).map(function(n){ return 'images/' + encodeURI(n); }); });
   }
   function probe(src){
     return new Promise(function(res){ var i = new Image(); i.onload = function(){ res(src); }; i.onerror = function(){ res(null); }; i.src = src; });
   }
-  function fromNumbered(){   // works offline too: images/photo-01.jpg, photo-02.jpg ...
+  function probeVideo(src){
+    return new Promise(function(res){
+      var v = document.createElement('video'), done = false;
+      function end(r){ if (done) return; done = true; v.removeAttribute('src'); v.load(); res(r); }
+      v.preload = 'metadata'; v.muted = true;
+      v.onloadedmetadata = function(){ end(src); }; v.onerror = function(){ end(null); };
+      setTimeout(function(){ end(null); }, 4000);
+      v.src = src;
+    });
+  }
+  function fromNumbered(){   // works offline too: images/photo-01.jpg ... and images/video-01.mp4 ...
     var jobs = [];
-    for (var n = 1; n <= 60; n++) jobs.push(probe('images/photo-' + (n < 10 ? '0' : '') + n + '.jpg'));
+    for (var n = 1; n <= 120; n++) jobs.push(probe('images/photo-' + (n < 10 ? '0' : '') + n + '.jpg'));
+    for (var m = 1; m <= 30; m++) jobs.push(probeVideo('images/video-' + (m < 10 ? '0' : '') + m + '.mp4'));
     return Promise.all(jobs).then(function(l){ return l.filter(Boolean); });
   }
   function loadPhotoList(){
@@ -2414,6 +2428,11 @@
   function rnd(a, b){ return a + Math.random() * (b - a); }
   function shuffle(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
+  function isVid(src){ return VID_RE.test(String(src || '').split('?')[0]); }
+  function posterOf(src){ return src.replace(/^images\//, 'images/posters/').replace(/\.[^.]+$/, '.jpg'); }
+  function playVid(p){ var v = p && p.querySelector('video'); if (v){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); p.classList.add('playing'); } }
+  function stopVid(p){ var v = p && p.querySelector('video'); if (v){ v.pause(); try{ v.currentTime = 0.1; }catch(e){} p.classList.remove('playing'); } }
+
   var SCALE = 2.1;   // hovered photo is 2.1x bigger than the floating one
 
   function fit(p){   // keep the enlarged photo inside the screen
@@ -2431,13 +2450,13 @@
     if (activeF){
       var pr = activeF.querySelector('.print');
       activeF.classList.remove('active');
-      if (pr){ pr.style.setProperty('--dx', '0px'); pr.style.setProperty('--dy', '0px'); }
+      if (pr){ pr.style.setProperty('--dx', '0px'); pr.style.setProperty('--dy', '0px'); stopVid(pr); }
       activeF = null;
     }
   }
   function activate(f, p){            // same look as hover: stop, grow, sharp
     if (activeF === f) return;
-    deactivate(); fit(p);
+    deactivate(); fit(p); playVid(p);
     f.classList.add('active'); activeF = f;
     activeT = setTimeout(deactivate, 9000);   // auto-resume if nobody taps away
   }
@@ -2445,7 +2464,10 @@
     if (activeF && !e.target.closest('.print')) deactivate();
   });
   function nextIndex(){
-    if (!queue.length) queue = shuffle(valid());
+    if (!queue.length){
+      var v = valid(), vids = v.filter(function(k){ return isVid(shown[k]); });
+      queue = shuffle(v.concat(vids, vids, vids));   // videos come up 4x as often so they are easy to spot
+    }
     return queue.pop();
   }
   function limit(){ return photoCap; }
@@ -2474,16 +2496,27 @@
     var p = document.createElement('div'); p.className = 'print';
     p.tabIndex = 0; p.setAttribute('role', 'button'); p.setAttribute('aria-label', 'Open photo');
     p.style.setProperty('--s', 1 / SCALE); p.style.setProperty('--rot', rnd(-7, 7) + 'deg');
-    var img = document.createElement('img'); img.alt = 'Memory photo'; img.decoding = 'async';
-    img.onerror = function(){ f.remove(); shown[i] = null; };
-    img.src = shown[i];
-    p.appendChild(img); sw.appendChild(p); f.appendChild(sw);
+    var media;
+    if (isVid(shown[i])){          // a video: floats like a photo, plays (muted) while you hover it
+      p.classList.add('vid'); p.setAttribute('aria-label', 'Open video');
+      media = document.createElement('video');
+      media.muted = true; media.loop = true; media.playsInline = true; media.setAttribute('playsinline', '');
+      media.preload = 'metadata'; media.poster = posterOf(shown[i]);
+      media.onloadedmetadata = function(){ if (media.videoWidth) media.style.aspectRatio = media.videoWidth + ' / ' + media.videoHeight; };
+      media.onerror = function(){ f.remove(); shown[i] = null; };
+      media.src = shown[i] + '#t=0.1';
+    } else {
+      media = document.createElement('img'); media.alt = 'Memory photo'; media.decoding = 'async';
+      media.onerror = function(){ f.remove(); shown[i] = null; };
+      media.src = shown[i];
+    }
+    p.appendChild(media); sw.appendChild(p); f.appendChild(sw);
 
     f.addEventListener('animationend', function(e){ if (e.target === f) f.remove(); });   // flew off the top
     var lastType = 'mouse';
     p.addEventListener('pointerdown', function(e){ lastType = e.pointerType; });
-    p.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') fit(p); });
-    p.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse'){ p.style.setProperty('--dx', '0px'); p.style.setProperty('--dy', '0px'); } });
+    p.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse'){ fit(p); playVid(p); } });
+    p.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse'){ p.style.setProperty('--dx', '0px'); p.style.setProperty('--dy', '0px'); stopVid(p); } });
     p.addEventListener('click', function(){
       if (lastType === 'touch' || lastType === 'pen'){          // phone: tap = same as hover; tap again = shrink back
         if (activeF === f) deactivate(); else activate(f, p);
@@ -2509,17 +2542,23 @@
   }
 
   /* ---------- Lightbox ---------- */
-  var box = document.getElementById('lightbox'), boxImg = document.getElementById('lbImg'), cur = 0;
+  var box = document.getElementById('lightbox'), boxImg = document.getElementById('lbImg'), boxVid = document.getElementById('lbVid'), cur = 0;
   function valid(){ return shown.map(function(s, i){ return s ? i : -1; }).filter(function(i){ return i >= 0; }); }
   function show(i){
     var v = valid(); if (!v.length) return;
     var pos = v.indexOf(i); if (pos < 0) pos = 0;
     pos = (pos + v.length) % v.length; cur = v[pos];
-    boxImg.src = shown[cur]; boxImg.alt = 'Memory photo';
+    if (isVid(shown[cur])){
+      boxImg.style.display = 'none'; boxVid.style.display = 'block'; boxVid.src = shown[cur]; boxVid.muted = false;
+      var pr = boxVid.play(); if (pr && pr.catch) pr.catch(function(){ boxVid.muted = true; boxVid.play(); });
+    } else {
+      boxVid.pause(); boxVid.removeAttribute('src'); boxVid.style.display = 'none';
+      boxImg.style.display = ''; boxImg.src = shown[cur]; boxImg.alt = 'Memory photo';
+    }
   }
   function step(dir){ var v = valid(); var pos = v.indexOf(cur); show(v[(pos + dir + v.length) % v.length]); }
   function openBox(i){ box.classList.remove('solo'); show(i); box.classList.add('open'); document.getElementById('lbClose').focus(); }
-  function closeBox(){ box.classList.remove('open'); }
+  function closeBox(){ box.classList.remove('open'); boxVid.pause(); boxVid.removeAttribute('src'); boxVid.style.display = 'none'; boxImg.style.display = ''; }
   document.getElementById('lbClose').onclick = closeBox;
   document.getElementById('lbPrev').onclick = function(e){ e.stopPropagation(); step(-1); };
   document.getElementById('lbNext').onclick = function(e){ e.stopPropagation(); step(1); };
