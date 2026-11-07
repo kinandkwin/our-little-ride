@@ -3146,6 +3146,7 @@
   curEl = document.querySelector('.page[data-id="intro"]');
   buildOrder(null);                                        // provisional (no photos page yet)
   photoPromise.then(function(list){ buildOrder(list); });  // final order once we know if there are photos
+  photoPromise.then(function(list){ if (list && list.length) launchPhotos(list); });   // photos start floating as soon as the page opens
 
   $('startBtn').addEventListener('click', function(){
     if (!started){
@@ -3155,7 +3156,6 @@
       burst(innerWidth / 2, innerHeight * .4, 160); fireworks(3);
       for (var i = 0; i < 6; i++) setTimeout(spawnHeart, i * 300);
       setInterval(spawnHeart, 1500);
-      photoPromise.then(function(list){ if (list && list.length) launchPhotos(list); });
     }
     go(1);
   });
