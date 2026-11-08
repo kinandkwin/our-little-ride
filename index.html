@@ -733,6 +733,19 @@
   @keyframes cpCheer{ from{ transform:rotate(-14deg); } to{ transform:rotate(14deg); } }
   .cp-glow{ animation:starTw 1.6s ease-in-out infinite; }
 
+  /* hot air balloon */
+  .balloon{ position:absolute; left:50%; bottom:var(--bb,128px); width:min(62vw,290px); margin-left:calc(min(62vw,290px) / -2); aspect-ratio:300 / 440; cursor:pointer;
+    transform-origin:50% 0; animation:balloonFloat 5.5s ease-in-out infinite alternate; -webkit-tap-highlight-color:transparent; }
+  @keyframes balloonFloat{ from{ transform:translateY(0) rotate(-1.4deg); } to{ transform:translateY(-18px) rotate(1.6deg); } }
+  .bl-env, .bl-basket{ position:absolute; left:0; top:0; width:100%; height:100%; display:block; overflow:visible; pointer-events:none; }
+  .balloon .bl-couple{ left:26.67%; bottom:auto; top:65.9%; width:46.67%; margin-left:0; pointer-events:none; }
+  .bflame{ transform-box:fill-box; transform-origin:50% 100%; animation:bflame .38s ease-in-out infinite alternate; }
+  @keyframes bflame{ from{ transform:scale(.88,.82); } to{ transform:scale(1.1,1.18); } }
+  .bfar{ position:absolute; animation:bdrift var(--bd,40s) ease-in-out infinite alternate; animation-delay:var(--bdl,0s); pointer-events:none; }
+  .bfar svg{ display:block; width:100%; height:auto; }
+  @keyframes bdrift{ from{ transform:translate(0,0); } to{ transform:translate(46px,-26px); } }
+  .l-bhill1{ bottom:-20px; height:260px; --t:130s; }
+  .l-bhill2{ bottom:-96px; height:260px; --t:70s; }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; }
@@ -781,10 +794,11 @@
     <path d="M108 106L138 114L142 142" stroke="#33193a" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M108 106L138 114L142 142" stroke="#6c5b9a" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <ellipse cx="148" cy="146" rx="10" ry="5" fill="#fff" stroke="#33193a" stroke-width="2"/>
-    <path d="M92 106Q90 78 108 70Q124 66 134 76Q140 90 136 106Z" fill="#ff8fa3" stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M92 106Q90 78 108 70Q124 66 134 76Q140 90 136 106Z" fill="#fff7f2" stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"/>
+    <g fill="#f6a6c0"><circle cx="110" cy="92" r="3.6"/><circle cx="116" cy="86" r="3.6"/><circle cx="122" cy="93" r="3.6"/><circle cx="115" cy="98" r="3.6"/><circle cx="116" cy="92" r="2.2" fill="#e2547c"/></g>
     <!-- HER ponytail -->
     <g class="hair">
-      <path d="M96 48Q76 42 64 58Q54 74 38 74Q58 62 62 52Q68 34 96 38Z" fill="#2a1c33" stroke="#33193a" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M96 48Q74 44 60 62Q48 86 24 92Q52 70 60 54Q68 34 96 38Z" fill="#3a2326" stroke="#33193a" stroke-width="2" stroke-linejoin="round"/>
       <circle cx="93" cy="43" r="4.3" fill="#ff5a6e" stroke="#33193a" stroke-width="1.6"/>
     </g>
 
@@ -792,7 +806,7 @@
     <path d="M160 108L196 112L204 142" stroke="#33193a" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M160 108L196 112L204 142" stroke="#2f3f78" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <ellipse cx="211" cy="146" rx="10" ry="5" fill="#fff" stroke="#33193a" stroke-width="2"/>
-    <path d="M146 106Q146 74 162 66Q180 61 190 72Q196 88 192 106Z" fill="#4a86c5" stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M146 106Q146 74 162 66Q180 61 190 72Q196 88 192 106Z" fill="#2b2b36" stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"/>
 
     <!-- scooter front -->
     <g stroke="#33193a" stroke-width="2.2" stroke-linejoin="round">
@@ -812,11 +826,11 @@
 
     <!-- HER arm hugging his waist -->
     <path d="M130 78Q146 80 154 96" stroke="#33193a" stroke-width="13" fill="none" stroke-linecap="round"/>
-    <path d="M130 78Q146 80 154 96" stroke="#ff8fa3" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M130 78Q146 80 154 96" stroke="#fff7f2" stroke-width="9" fill="none" stroke-linecap="round"/>
     <circle cx="155" cy="97" r="5.5" fill="#ffdcc4" stroke="#33193a" stroke-width="2"/>
     <!-- HIM arm to the handlebar -->
     <path d="M184 74Q206 84 226 70" stroke="#33193a" stroke-width="13" fill="none" stroke-linecap="round"/>
-    <path d="M184 74Q206 84 226 70" stroke="#4a86c5" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M184 74Q206 84 226 70" stroke="#2b2b36" stroke-width="9" fill="none" stroke-linecap="round"/>
     <circle cx="229" cy="68" r="5.5" fill="#ffdcc4" stroke="#33193a" stroke-width="2"/>
 
     <g transform="translate(0 2)"><!-- HER head -->
@@ -848,6 +862,11 @@
     <path d="M172 17Q174 24 172 29" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/>
     <path d="M160 27c-2-3-6-1-4 2 1 2 4 4 4 4s3-2 4-4c2-3-2-5-4-2z" fill="#fff"/>
     <path d="M153 46Q155 62 168 66" stroke="#33193a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- his thick square glasses -->
+    <g fill="#fff" fill-opacity=".2" stroke="#14101a" stroke-width="2.5" stroke-linejoin="round"><rect x="162.4" y="41.6" width="15.2" height="13" rx="3.6"/><rect x="180.4" y="41.6" width="15.2" height="13" rx="3.6"/></g>
+    <path d="M161.6 42H196.4" stroke="#14101a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M177.6 46Q179 44.6 180.4 46M162.4 45.5L157 44M195.6 45.5L200 44" stroke="#14101a" stroke-width="2.1" fill="none" stroke-linecap="round"/>
+    <circle cx="165" cy="44.6" r="1" fill="#e0a93c"/><circle cx="193" cy="44.6" r="1" fill="#e0a93c"/>
   </g>
   </svg>
 </div>
@@ -1128,6 +1147,7 @@
   var LINES_HIM = ["Anh yêu em! 💗", "Đi ăn gì nhỉ? 🍜", "Ôm chặt nha~", "Sinh nhật vui nha em!", "Hôm nay em đẹp nhất 😘"];
   var LINES_HER = ["Em cũng yêu anh! 💕", "Chạy chậm thôi anh~", "Nhìn kìa, đẹp quá!", "Em đói rồi 😋", "Nhớ nắm tay em nha"];
   var KISS_LINES = ["Mwah~ 😘", "Aww anh~ 🥰", "Anh hôn em hả? 😳"];
+  var BALLOON_LINES = ["Nhìn xuống kìa, mọi thứ nhỏ xíu! 🎈", "Em hơi sợ độ cao... nhưng có anh rồi 🥺", "Ước gì mình bay mãi thế này 💗", "Ôm em chặt nha, gió lạnh quá~", "Bay cao thế này thấy cả tim mình luôn 💞"];
   var PLANE_LINES = ["Thắt dây an toàn nha em ✈️", "Điểm đến tiếp theo: mãi mãi 💗", "Nhìn mây kìa!"];
   // opens when she finds all 5 hidden hearts in the scenery
   var SECRET_LETTER = "Em tìm đủ năm trái tim rồi...\n\nGiống như cách em đã tìm thấy đường vào tim anh. Cảm ơn em vì tất cả. Anh sẽ luôn cố gắng thật nhiều, vì em và vì tương lai của hai đứa mình.\n\nChúc mừng sinh nhật, em yêu. 💗";
@@ -1408,6 +1428,12 @@
     var el = s.el._actor;
     if (s.id === 'judo'){ judoShow(s); return; }
     if (s.id === 'bed'){ bedTap(s); return; }
+    if (s.id === 'balloon'){
+      var c = el.querySelector('.couple'); c._n = (c._n || 0) + 1;
+      if (c._n % 2 === 1){ kiss(c, -10); }
+      else { c._who = c._who === 'him' ? 'her' : 'him'; say(c, c._who, pick(BALLOON_LINES), -10); blush(c); sfx.pop(); }
+      burstEl(c, 24); return;
+    }
     if (s.kind === 'plane'){ sfx.ding(); burstEl(el, 30); say(el, 'her', pick(PLANE_LINES), 14); return; }
     el._n = (el._n || 0) + 1;
     var off = s.id === 'rain' ? -70 : 0;
@@ -1620,6 +1646,21 @@
       '<ellipse class="bl" cx="' + (cx - 9) + '" cy="' + (cy + 13) + '" rx="4.6" ry="2.6" fill="#ff8aa5" opacity=".8"/><ellipse class="bl" cx="' + (cx + 20) + '" cy="' + (cy + 13) + '" rx="4.6" ry="2.6" fill="#ff8aa5" opacity=".8"/>' +
       '<path d="M' + (cx + 3) + ' ' + (cy + 13) + 'Q' + (cx + 8) + ' ' + (cy + 18) + ' ' + (cx + 13) + ' ' + (cy + 13) + '" stroke="#33193a" stroke-width="2" fill="none" stroke-linecap="round"/>';
   }
+  /* ---------- how the two of them really look: his curly black hair + thick round glasses, her long brown hair ---------- */
+  var HIM_HAIR = '#2a1c33', HER_HAIR = '#3a2326';
+  function glasses(cx, cy){   // his real glasses: thick black, rounded-square frames with two little gold studs
+    var y = cy + 4.5, a = cx - 2, b = cx + 14, w = 14.6, h = 12.6;
+    return '<g fill="#fff" fill-opacity=".2" stroke="#14101a" stroke-width="2.9" stroke-linejoin="round">' +
+        '<rect x="' + (a - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="3.6"/>' +
+        '<rect x="' + (b - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="3.6"/></g>' +
+      '<path d="M' + (a - w / 2 - .5) + ' ' + (y - h / 2 + .6) + 'H' + (b + w / 2 + .5) + '" stroke="#14101a" stroke-width="3.2" stroke-linecap="round"/>' +
+      '<path d="M' + (a + w / 2) + ' ' + (y - 2.4) + 'Q' + ((a + b) / 2) + ' ' + (y - 4.4) + ' ' + (b - w / 2) + ' ' + (y - 2.4) + '" stroke="#14101a" stroke-width="2.4" fill="none"/>' +
+      '<path d="M' + (a - w / 2) + ' ' + (y - 2) + 'L' + (a - w / 2 - 4.5) + ' ' + (y - 4) + 'M' + (b + w / 2) + ' ' + (y - 2) + 'L' + (b + w / 2 + 4) + ' ' + (y - 4) + '" stroke="#14101a" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<circle cx="' + (a - w / 2 + 2.2) + '" cy="' + (y - h / 2 + 3) + '" r="1.1" fill="#e0a93c"/><circle cx="' + (b + w / 2 - 2.2) + '" cy="' + (y - h / 2 + 3) + '" r="1.1" fill="#e0a93c"/>';
+  }
+  function shades(cx, cy){
+    return '<g transform="translate(' + cx + ' ' + cy + ') rotate(-6)" stroke="#33193a" stroke-width="2"><ellipse cx="-9" cy="0" rx="8" ry="5.4" fill="#ffb6c8" fill-opacity=".92"/><ellipse cx="9" cy="0" rx="8" ry="5.4" fill="#ffb6c8" fill-opacity=".92"/><path d="M-1 -1Q0 -2.4 1 -1" fill="none"/></g>';
+  }
   function coupleSVG(v){
     var S = 'stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"';
     var leg = function(x, y, len, col, shoe, cls){
@@ -1630,22 +1671,25 @@
     // HER legs + dress (+ scarf)
     s += leg(51, 104, 44, v.herLeg, v.herShoe, 'a') + leg(66, 104, 44, v.herLeg, v.herShoe, 'b');
     s += '<path d="M42 66Q58 58 74 66L83 108Q58 114 33 108Z" fill="' + v.her + '" ' + S + '/>';
+    if (v.print) s += '<g fill="#f6a6c0"><circle cx="52" cy="88" r="3.6"/><circle cx="58" cy="83" r="3.6"/><circle cx="64" cy="89" r="3.6"/><circle cx="57" cy="94" r="3.6"/><circle cx="58" cy="89" r="2.2" fill="#e2547c"/></g>';
     if (v.scarf) s += '<path d="M46 74L40 100L53 97Z" fill="' + v.scarf + '" ' + S + '/><path d="M44 66Q58 77 76 66L76 77Q58 88 44 77Z" fill="' + v.scarf + '" ' + S + '/>';
     // HIM legs
     s += leg(119, 110, 38, v.himLeg, v.himShoe, 'b') + leg(139, 110, 38, v.himLeg, v.himShoe, 'a');
     // HIM taller upper body
     s += '<g transform="translate(0 -14)"><path d="M108 64Q128 56 148 64L152 114Q128 120 104 114Z" fill="' + v.him + '" ' + S + '/>';
+    if (v.stripe) s += '<path d="M108 63Q128 74 148 63" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/>';
     if (v.scarf) s += '<path d="M112 70L106 96L119 93Z" fill="' + v.scarf + '" ' + S + '/><path d="M108 62Q128 73 148 62L148 73Q128 84 108 73Z" fill="' + v.scarf + '" ' + S + '/>';
     s += '<g class="himhead">' + face(128, 40) +
-         '<path d="M107 38Q104 14 134 12Q162 14 158 40Q154 26 136 24Q118 24 107 38Z" fill="#2a1c33" ' + S + '/>';
+         '<path d="M107 38Q104 14 134 12Q162 14 158 40Q154 26 136 24Q118 24 107 38Z" fill="' + HIM_HAIR + '" ' + S + '/>' + glasses(128, 40);
     if (v.cap) s += '<path d="M107 34Q106 10 134 10Q160 10 158 34Q150 24 134 24Q118 24 107 34Z" fill="#34528f" ' + S + '/><path d="M148 26Q166 24 170 34L152 33Z" fill="#1f2f5c" ' + S + '/>';
     if (v.beanie) s += '<path d="M105 28Q105 2 128 2Q151 2 151 28Q128 20 105 28Z" fill="' + v.beanie[1] + '" ' + S + '/><rect x="105" y="23" width="46" height="8" rx="4" fill="' + v.beanie[1] + '" ' + S + '/><circle cx="128" cy="0" r="6" fill="#fff" ' + S + '/>';
     if (v.beret) s += '<ellipse cx="132" cy="10" rx="27" ry="9" transform="rotate(8 132 10)" fill="' + v.beret[1] + '" ' + S + '/><circle cx="134" cy="1" r="2.6" fill="' + v.beret[1] + '"/>';
     s += '</g></g>';
     s += '<path d="M106 98H150V116H106Z" fill="' + v.pants + '" ' + S + '/>';
     // HER head (a bit lower)
-    s += '<g transform="translate(0 5)"><g class="herhead"><path d="M33 40Q30 14 58 13Q86 14 83 42Q86 62 78 66Q82 40 58 38Q34 40 38 66Q30 60 33 40Z" fill="#2a1c33" ' + S + '/>' + face(58, 40) +
-         '<path d="M28 38Q27 12 58 12Q90 12 87 40Q82 24 62 22Q46 22 40 36Q37 40 28 38Z" fill="#2a1c33" ' + S + '/>';
+    s += '<g transform="translate(0 5)"><g class="herhead"><path d="M33 40Q30 14 58 13Q86 14 83 42Q90 66 82 84Q80 48 58 38Q36 48 34 84Q26 66 33 40Z" fill="' + HER_HAIR + '" ' + S + '/>' + face(58, 40) +
+         '<path d="M28 38Q27 12 58 12Q90 12 87 40Q82 24 62 22Q46 22 40 36Q37 40 28 38Z" fill="' + HER_HAIR + '" ' + S + '/><path d="M36 26Q58 14 80 26" stroke="#8a6460" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".5"/>';
+    if (v.shades) s += shades(58, 15);
     if (v.hat) s += '<ellipse cx="58" cy="22" rx="34" ry="6.5" fill="#f1d08a" ' + S + '/><path d="M42 22Q42 8 58 8Q74 8 76 22Z" fill="#f1d08a" ' + S + '/><rect x="42" y="17" width="34" height="5" fill="#e2547c"/>';
     if (v.beanie) s += '<path d="M34 30Q34 4 58 4Q82 4 82 30Q58 22 34 30Z" fill="' + v.beanie[0] + '" ' + S + '/><rect x="34" y="25" width="48" height="8" rx="4" fill="' + v.beanie[0] + '" ' + S + '/><circle cx="58" cy="2" r="6" fill="#ffd1dc" ' + S + '/>';
     if (v.beret) s += '<ellipse cx="62" cy="12" rx="27" ry="9" transform="rotate(-8 62 12)" fill="' + v.beret[0] + '" ' + S + '/><circle cx="60" cy="3" r="2.6" fill="' + v.beret[0] + '"/>';
@@ -1667,11 +1711,11 @@
     }
     return s + '</g></svg>';
   }
-  var COUPLE_BEACH  = { her:'#ff9fb3', herLeg:'#ffdcc4', herShoe:'#ffdcc4', him:'#7ed3e0', himLeg:'#ffdcc4', himShoe:'#ffdcc4', pants:'#e2547c', hat:true, cap:true };
-  var COUPLE_NIGHT  = { her:'#ff9fb3', herLeg:'#ffdcc4', herShoe:'#ffdcc4', him:'#7ed3e0', himLeg:'#ffdcc4', himShoe:'#ffdcc4', pants:'#e2547c', lantern:true };
-  var COUPLE_TOWN   = { her:'#9ad0ff', herLeg:'#6c5b9a', herShoe:'#fff', him:'#c85a54', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', flower:true, lantern:true };
-  var COUPLE_RAIN   = { her:'#ff8fa3', herLeg:'#6c5b9a', herShoe:'#fff', him:'#4a86c5', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', umbrella:'#e2547c' };
-  var COUPLE_SAKURA = { her:'#ffb3c7', herLeg:'#6c5b9a', herShoe:'#fff', him:'#6a86c8', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', flower:true };
+  var COUPLE_BEACH  = { her:'#ffffff', herLeg:'#ffdcc4', herShoe:'#ffdcc4', him:'#2b2b36', himLeg:'#ffdcc4', himShoe:'#ffdcc4', pants:'#e2547c', hat:true, cap:true, print:true, stripe:true };
+  var COUPLE_NIGHT  = { her:'#ffffff', herLeg:'#ffdcc4', herShoe:'#ffdcc4', him:'#2b2b36', himLeg:'#ffdcc4', himShoe:'#ffdcc4', pants:'#e2547c', lantern:true, print:true, stripe:true, shades:true };
+  var COUPLE_TOWN   = { her:'#9ad0ff', herLeg:'#6c5b9a', herShoe:'#fff', him:'#2b2b36', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', flower:true, lantern:true, stripe:true };
+  var COUPLE_RAIN   = { her:'#ffffff', herLeg:'#6c5b9a', herShoe:'#fff', him:'#2b2b36', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', umbrella:'#e2547c', print:true, stripe:true };
+  var COUPLE_SAKURA = { her:'#ffb3c7', herLeg:'#6c5b9a', herShoe:'#fff', him:'#2b2b36', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', flower:true, stripe:true };
   var COUPLE_SNOW   = { her:'#ff7f9f', herLeg:'#5a4a7a', herShoe:'#fff', him:'#3d4f7a', himLeg:'#2b3558', himShoe:'#fff', pants:'#2b3558', scarf:'#e2547c', beanie:['#ffffff', '#9aa4b8'] };
   var COUPLE_DALAT  = { her:'#f4c04a', herLeg:'#6c5b9a', herShoe:'#fff', him:'#e8884a', himLeg:'#2f3f78', himShoe:'#fff', pants:'#4a5a8a', scarf:'#7ed3e0', flower:true };
   var COUPLE_PARIS  = { her:'#e2547c', herLeg:'#33193a', herShoe:'#fff', him:'#34528f', himLeg:'#2b3558', himShoe:'#fff', pants:'#2b3558', beret:['#e2547c', '#33493e'] };
@@ -1684,7 +1728,7 @@
         w += '<clipPath id="wc' + i + '"><circle cx="' + x + '" cy="64" r="9.5"/></clipPath><circle cx="' + x + '" cy="64" r="9.5" fill="#bfe6ff" ' + S + '/><g clip-path="url(#wc' + i + ')">' +
              '<rect x="' + (x - 10) + '" y="64" width="20" height="14" fill="' + (i === 2 ? '#ff8fa3' : '#4a86c5') + '"/><circle cx="' + x + '" cy="63" r="6.4" fill="' + skin + '"/>' +
              '<path d="M' + (x - 7) + ' 62Q' + (x - 6) + ' 54 ' + x + ' 54Q' + (x + 6) + ' 54 ' + (x + 7) + ' 62Q' + (x + 3) + ' 58 ' + x + ' 58Q' + (x - 3) + ' 58 ' + (x - 7) + ' 62Z" fill="#2a1c33"/>' +
-             '<circle cx="' + (x - 1.6) + '" cy="64" r="1" fill="#33193a"/><circle cx="' + (x + 3.2) + '" cy="64" r="1" fill="#33193a"/><circle cx="' + (x - 3.5) + '" cy="67" r="1.4" fill="#ff8aa5"/><circle cx="' + (x + 5) + '" cy="67" r="1.4" fill="#ff8aa5"/></g>';
+             '<circle cx="' + (x - 1.6) + '" cy="64" r="1" fill="#33193a"/><circle cx="' + (x + 3.2) + '" cy="64" r="1" fill="#33193a"/>' + (i === 3 ? '<g fill="none" stroke="#14101a" stroke-width="1.4" stroke-linejoin="round"><rect x="' + (x - 4.2) + '" y="61.2" width="5.4" height="5" rx="1.3"/><rect x="' + (x + .6) + '" y="61.2" width="5.4" height="5" rx="1.3"/></g>' : '') + '<circle cx="' + (x - 3.5) + '" cy="67" r="1.4" fill="#ff8aa5"/><circle cx="' + (x + 5) + '" cy="67" r="1.4" fill="#ff8aa5"/></g>';
       } else w += '<circle cx="' + x + '" cy="64" r="6.5" fill="#bfe6ff" ' + S + '/>';
     });
     return '<svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">' +
@@ -2001,11 +2045,11 @@
          '<rect x="-26" y="97" width="52" height="9" rx="2" fill="' + o.belt + '" ' + S + '/><path d="M2 104L-6 120M2 104L11 118" stroke="' + o.belt + '" stroke-width="5" stroke-linecap="round"/>';
     g += '<g transform="translate(15 68)"><g class="' + o.arm + '"><path d="M0 2Q14 8 32 22" stroke="#33193a" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M0 2Q14 8 32 22" stroke="' + W + '" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="33" cy="23" r="5.5" fill="#ffdcc4" ' + S + '/></g></g>';
     if (o.her){
-      g += '<path d="M-24 40Q-28 12 0 11Q28 12 24 40Q26 56 18 60Q22 34 0 32Q-22 34 -18 60Q-26 54 -24 40Z" fill="#2a1c33" ' + S + '/><circle cx="-14" cy="12" r="9" fill="#2a1c33" ' + S + '/>';
-      g += jface(0, 38) + '<path d="M-23 36Q-24 12 2 12Q26 12 23 36Q19 24 2 22Q-14 22 -23 36Z" fill="#2a1c33" ' + S + '/>';
+      g += '<path d="M-24 40Q-28 12 0 11Q28 12 24 40Q26 56 18 60Q22 34 0 32Q-22 34 -18 60Q-26 54 -24 40Z" fill="' + HER_HAIR + '" ' + S + '/><circle cx="-14" cy="12" r="9" fill="' + HER_HAIR + '" ' + S + '/>';
+      g += jface(0, 38) + '<path d="M-23 36Q-24 12 2 12Q26 12 23 36Q19 24 2 22Q-14 22 -23 36Z" fill="' + HER_HAIR + '" ' + S + '/>';
       g += '<path d="M-22 28Q0 20 22 28L22 35Q0 27 -22 35Z" fill="#ff9fb3" ' + S + '/><circle cx="-14" cy="13" r="3.4" fill="#ff9fb3"/>';
     } else {
-      g += jface(0, 38) + '<path d="M-22 36Q-24 12 2 12Q26 12 22 36Q18 24 2 22Q-14 22 -22 36Z" fill="#2a1c33" ' + S + '/>';
+      g += jface(0, 38) + '<path d="M-22 36Q-24 12 2 12Q26 12 22 36Q18 24 2 22Q-14 22 -22 36Z" fill="' + HIM_HAIR + '" ' + S + '/>' + glasses(0, 38);
       g += '<path d="M-22 28Q0 20 22 28L22 35Q0 27 -22 35Z" fill="#fff" ' + S + '/><circle cx="12" cy="29" r="3.6" fill="#e2354c"/>';
     }
     return g;
@@ -2065,9 +2109,9 @@
   /* ---------- movie night in bed: cuddling under a blanket, projector on the wall ---------- */
   function headSVG(her){
     var S = 'stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"';
-    if (her) return '<path d="M-24 40Q-28 12 0 11Q28 12 24 40Q26 56 18 60Q22 34 0 32Q-22 34 -18 60Q-26 54 -24 40Z" fill="#2a1c33" ' + S + '/><circle cx="-14" cy="12" r="9" fill="#2a1c33" ' + S + '/>' + jface(0, 38) +
-      '<path d="M-23 36Q-24 12 2 12Q26 12 23 36Q19 24 2 22Q-14 22 -23 36Z" fill="#2a1c33" ' + S + '/>';
-    return jface(0, 38) + '<path d="M-22 36Q-24 12 2 12Q26 12 22 36Q18 24 2 22Q-14 22 -22 36Z" fill="#2a1c33" ' + S + '/>';
+    if (her) return '<path d="M-24 40Q-28 12 0 11Q28 12 24 40Q26 56 18 60Q22 34 0 32Q-22 34 -18 60Q-26 54 -24 40Z" fill="' + HER_HAIR + '" ' + S + '/><circle cx="-14" cy="12" r="9" fill="' + HER_HAIR + '" ' + S + '/>' + jface(0, 38) +
+      '<path d="M-23 36Q-24 12 2 12Q26 12 23 36Q19 24 2 22Q-14 22 -23 36Z" fill="' + HER_HAIR + '" ' + S + '/>';
+    return jface(0, 38) + '<path d="M-22 36Q-24 12 2 12Q26 12 22 36Q18 24 2 22Q-14 22 -22 36Z" fill="' + HIM_HAIR + '" ' + S + '/>' + glasses(0, 38);
   }
   function bedSVG(){
     var S = 'stroke="#33193a" stroke-width="2.2" stroke-linejoin="round"', hearts = '', i;
@@ -2209,12 +2253,72 @@
     var d = Math.ceil((new Date(n.getFullYear() + 1, 0, 1) - n) / 86400000);
     return '🎆 New Year\'s Eve by the river · ' + d + ' day' + (d === 1 ? '' : 's') + ' to go';
   }
+
+  /* ---------- hot air balloon ---------- */
+  var COUPLE_BALLOON = { her:'#ffffff', herLeg:'#6c5b9a', herShoe:'#fff', him:'#2b2b36', himLeg:'#2f3f78', himShoe:'#fff', pants:'#2f3f78', scarf:'#ffd166', print:true, stripe:true, shades:true };
+  function balloonEnvSVG(){
+    var S = 'stroke="#33193a" stroke-width="2.4" stroke-linejoin="round"';
+    var outline = 'M150 6C62 6 20 74 30 140C38 196 104 236 128 268L172 268C196 236 262 196 270 140C280 74 238 6 150 6Z';
+    var cols = ['#ff7a95', '#ffd166', '#4cc9b0', '#fff7ec', '#4cc9b0', '#ffd166', '#ff7a95'];
+    var xm = function(k){ return 150 + (k - 3.5) * 34.3; }, xb = function(k){ return 150 + (k - 3.5) * 6.3; };
+    var cx = function(k){ return 2 * xm(k) - 75 - .5 * xb(k); };
+    var panels = '', lines = '', k;
+    for (k = 0; k < 7; k++)
+      panels += '<path d="M150 6Q' + cx(k).toFixed(1) + ' 140 ' + xb(k).toFixed(1) + ' 268L' + xb(k + 1).toFixed(1) + ' 268Q' + cx(k + 1).toFixed(1) + ' 140 150 6Z" fill="' + cols[k] + '"/>';
+    for (k = 1; k < 7; k++)
+      lines += '<path d="M150 6Q' + cx(k).toFixed(1) + ' 140 ' + xb(k).toFixed(1) + ' 268" fill="none" stroke="#33193a" stroke-opacity=".32" stroke-width="1.4"/>';
+    return '<defs><clipPath id="blclip"><path d="' + outline + '"/></clipPath>' +
+      '<linearGradient id="blsh" x1="0" x2="1"><stop offset="0" stop-color="#33193a" stop-opacity="0"/><stop offset="1" stop-color="#33193a" stop-opacity=".24"/></linearGradient></defs>' +
+      '<path d="M128 272L80 364M172 272L220 364" stroke="#4a3030" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<g clip-path="url(#blclip)">' + panels + lines + '<rect x="150" y="0" width="140" height="272" fill="url(#blsh)"/>' +
+      '<ellipse cx="104" cy="82" rx="44" ry="26" transform="rotate(-32 104 82)" fill="#fff" opacity=".3"/></g>' +
+      '<path d="M150 142C128 126 124 106 136 98C144 93 150 99 150 106C150 99 156 93 164 98C176 106 172 126 150 142Z" fill="#ff5c8a" ' + S + '/>' +
+      '<path d="' + outline + '" fill="none" ' + S + '/>' +
+      '<path d="M126 258H174L172 272H128Z" fill="#e2547c" ' + S + '/>' +
+      '<rect x="141" y="270" width="18" height="8" rx="2.5" fill="#6a6a7a" ' + S + '/>' +
+      '<g class="bflame"><path d="M150 278C139 292 143 303 150 308C157 303 161 292 150 278Z" fill="#ff9d2e"/><path d="M150 290C145 297 147 302 150 305C153 302 155 297 150 290Z" fill="#fff0a0"/></g>';
+  }
+  function balloonBasketSVG(){
+    var S = 'stroke="#33193a" stroke-width="2.4" stroke-linejoin="round"', w = '', x;
+    for (x = 100; x <= 200; x += 25) w += '<path d="M' + x + ' 378V434" stroke="#33193a" stroke-opacity=".28" stroke-width="1.6"/>';
+    return '<rect x="68" y="360" width="164" height="16" rx="8" fill="#c98544" ' + S + '/>' +
+      '<path d="M76 376H224L212 436H88Z" fill="#e0a460" ' + S + '/>' + w +
+      '<path d="M80 394H220M84 413H216" stroke="#33193a" stroke-opacity=".3" stroke-width="1.6"/>' +
+      '<path d="M150 428C140 421 138 412 143 408C147 405 150 408 150 411C150 408 153 405 157 408C162 412 160 421 150 428Z" fill="#ff5c8a" stroke="#33193a" stroke-width="1.4"/>';
+  }
+  function miniBalloonSVG(c){
+    var S = 'stroke="#33193a" stroke-width="1.8" stroke-linejoin="round"';
+    return '<svg viewBox="0 0 60 86" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">' +
+      '<path d="M30 2C10 2 2 20 5 34C8 48 22 56 25 62H35C38 56 52 48 55 34C58 20 50 2 30 2Z" fill="' + c[0] + '" ' + S + '/>' +
+      '<path d="M30 2C22 14 20 40 25 62H35C40 40 38 14 30 2Z" fill="' + c[1] + '" ' + S + '/>' +
+      '<path d="M26 62L27 71M34 62L33 71" stroke="#33193a" stroke-width="1.4"/><rect x="25" y="70" width="10" height="8" rx="2" fill="#d99a5b" ' + S + '/></svg>';
+  }
+  function buildBalloon(sc){
+    mk('sky', sc, { background: grad(['#5fb0f5', '#9fd2ff', '#ffd9c4', '#ffe9b5']) });
+    mk('sun', sc, { left: '12%', right: 'auto', bottom: 'auto', top: '14%', background: 'radial-gradient(circle,#fffdf0 0%,#fff0b8 40%,rgba(255,235,160,0) 72%)' });
+    mk('layer l-clouds', sc, { backgroundImage: svgURL(1200, 200, cloudsSVG({ cloud: '#fff', cloudOp: .92 })) }).style.setProperty('--t', '80s');
+    [[7, 20, 46, ['#ff7a95', '#ffd166'], 34], [24, 44, 34, ['#4cc9b0', '#fff7ec'], 42], [66, 14, 40, ['#9b7bff', '#ffd166'], 38], [82, 38, 30, ['#ff9a4a', '#fff7ec'], 46], [90, 18, 36, ['#4a86c5', '#ffd166'], 36]].forEach(function(b, i){
+      var el = mk('bfar', sc); el.innerHTML = miniBalloonSVG(b[3]);
+      el.style.left = b[0] + '%'; el.style.top = b[1] + '%'; el.style.width = b[2] + 'px';
+      el.style.setProperty('--bd', b[4] + 's'); el.style.setProperty('--bdl', '-' + (i * 7) + 's');
+    });
+    mk('layer l-bhill1', sc, { backgroundImage: svgURL(1200, 260, hillsSVG({ hills: ['#f6c9ae', '#eeb09a'] })) });
+    mk('layer l-bhill2', sc, { backgroundImage: svgURL(1200, 260, hillsSVG({ hills: ['#e99d8a', '#d9877c'] })) });
+    mk('', sc, { position: 'absolute', left: '0', right: '0', bottom: '0', height: '36px', background: '#d4796f' });
+    var b = mk('balloon', sc);
+    b.innerHTML = '<svg class="bl-env" viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">' + balloonEnvSVG() + '</svg>' +
+      '<div class="couple still bl-couple">' + coupleSVG(COUPLE_BALLOON) + '</div>' +
+      '<svg class="bl-basket" viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">' + balloonBasketSVG() + '</svg>';
+    sc._actor = b;
+  }
+
   var SCENES = [
     { id: 'sunset',     kind: 'ride',  tag: '🌇 Golden hour ride',            build: function(sc){ buildRide(sc, 'sunset'); } },
     { id: 'beach',      kind: 'walk',  tag: '🏖️ Beach walk, hand in hand',    build: function(sc){ buildBeach(sc, false); }, birds: '#35405a' },
     { id: 'night',      kind: 'ride',  tag: '🌙 Night ride',                   build: function(sc){ buildRide(sc, 'night'); }, night: true },
     { id: 'plane',      kind: 'plane', tag: '✈️ Up in the clouds, together',   build: buildPlane },
-    { id: 'sakura',     kind: 'walk',  tag: '🌸 Sakura season in Japan',       build: buildSakura, birds: '#6a4a6a' },
+    { id: 'balloon',    kind: 'plane', tag: '🎈 Floating above the world, just us two', build: buildBalloon, birds: '#6a6a9a' },
+    { id: 'sakura',     kind: 'walk',  tag: '🌸🗻 Sakura & Mount Fuji, Japan',       build: buildSakura, birds: '#6a4a6a' },
     { id: 'judo',       kind: 'walk',  tag: '🥋 Uchi-mata! IPPON!',            build: buildJudo, onShow: judoShow },
     { id: 'morning',    kind: 'ride',  tag: '☀️ Good morning ride',            build: function(sc){ buildRide(sc, 'morning'); } },
     { id: 'rain',       kind: 'walk',  tag: '☔ One umbrella for two',          build: buildRainScene },
